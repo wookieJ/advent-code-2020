@@ -2,7 +2,7 @@
 
 https://adventofcode.com
 
-## Setting for IDE
+## Settings for IDE
 ### Running main
 Try to run main func. If not working try to  edit configurations.
 Set *Run kind* to `Package`, define package path (module name) and working 
