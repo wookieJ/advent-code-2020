@@ -2,6 +2,14 @@
 
 https://adventofcode.com
 
+## Create new day template
+``` bash
+cd tools
+bash newDay.sh "Day-XX-name" "Day XX: description"
+``` 
+
+Remember to sync new go module (`go.mod [PPM]` -> `Sync Go Module`)
+
 ## Settings for IDE
 ### Running main
 Try to run main func. If not working try to  edit configurations.
