@@ -52,3 +52,17 @@ func TestShouldGetIntValuesFromStringInput(t *testing.T) {
 	assert.Equal(t, []int{145, 20, 23, 90, 0, 2, 99999, 6}, intValuesLines)
 	assert.Equal(t, []int{145, 20, 23, 90, 0, 2, 99999, 6}, intValuesCommas)
 }
+
+func TestShouldGetStringValuesFromStringInput(t *testing.T) {
+	// given
+	inputLines := "145\n20\ntest\nelo"
+	inputCommas := "145,20,test,elo"
+
+	// when
+	stringValuesLines := GetStringArrayFromStringInput(inputLines, "\n")
+	stringValuesCommas := GetStringArrayFromStringInput(inputCommas, ",")
+
+	// then
+	assert.Equal(t, []string{"145", "20", "test", "elo"}, stringValuesLines)
+	assert.Equal(t, []string{"145", "20", "test", "elo"}, stringValuesCommas)
+}

@@ -36,3 +36,7 @@ func GetIntArrayFromStringInput(input, sep string) []int {
 	}
 	return values
 }
+
+func GetStringArrayFromStringInput(input, sep string) []string {
+	return strings.Split(strings.TrimSpace(input), sep)
+}
