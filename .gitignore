@@ -14,4 +14,7 @@
 # IDE
 .idea/
 
+# MacOs
+.DS_Store
+
 # custom
