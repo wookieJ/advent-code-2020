@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 2 ]; then
-    echo "Pass two input arguments: <Day module name> and <Day description>"
+if [ $# -lt 3 ]; then
+    echo "Pass three input arguments: <Day module name> <Day description> <AoC session cookie>"
     exit 1
 fi
 
@@ -23,6 +23,7 @@ go mod verify
 go mod tidy
 go test ./...
 
-# Remember to sync new go module ([PPM] go.mod -> Sync Go Module)
+go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
+aocdl -session-cookie "$3" -output data/input
 
-# todo - set title and description from web, add README for module
+# Remember to sync new go module ([PPM] go.mod -> Sync Go Module)
