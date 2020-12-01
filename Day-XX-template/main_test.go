@@ -5,13 +5,24 @@ import (
 	"testing"
 )
 
-func Test(t *testing.T) {
+func TestShouldGetFirstExample(t *testing.T) {
 	// given
-	number := 2
+	input := "1\n1\n1"
 
 	// when
-	result := number * number
+	result := firstPart(input)
 
 	// then
-	assert.Equal(t, 4, result)
+	assert.Equal(t, 0, result)
+}
+
+func TestShouldGetSecondExample(t *testing.T) {
+	// given
+	input := "1\n1\n1"
+
+	// when
+	result := secondPart(input)
+
+	// then
+	assert.Equal(t, 0, result)
 }
