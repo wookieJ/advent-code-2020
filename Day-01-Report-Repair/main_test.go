@@ -5,13 +5,24 @@ import (
 	"testing"
 )
 
-func Test(t *testing.T) {
+func TestShouldGetFirstExample(t *testing.T) {
 	// given
-	number := 2
+	numbers := "1721\n979\n366\n299\n675\n1456"
 
 	// when
-	result := number * number
+	result := firstPart(numbers)
 
 	// then
-	assert.Equal(t, 4, result)
+	assert.Equal(t, 514579, result)
+}
+
+func TestShouldGetSecondExample(t *testing.T) {
+	// given
+	numbers := "1721\n979\n366\n299\n675\n1456"
+
+	// when
+	result := secondPart(numbers)
+
+	// then
+	assert.Equal(t, 241861950, result)
 }
