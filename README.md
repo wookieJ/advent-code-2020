@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-https://adventofcode.com
+https://adventofcode.com/2020
 
 ## Create new day template
 There is a script, which creates new golang module for current day. It demands three input arguments:
