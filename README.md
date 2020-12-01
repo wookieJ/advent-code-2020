@@ -3,9 +3,16 @@
 https://adventofcode.com
 
 ## Create new day template
+There is a script, which creates new golang module for current day. It demands three input arguments:
+1. Module name
+2. Short description
+3. Your AoC session cookie
+
+Session cookie needs to be set for input downloading
+
 ``` bash
 cd tools
-bash newDay.sh "Day-XX-name" "Day XX: description"
+bash newDay.sh "Day-XX-name" "Day XX: description" "<your_AoC_session_cookie>"
 ``` 
 
 Remember to sync new go module (`go.mod [PPM]` -> `Sync Go Module`)
