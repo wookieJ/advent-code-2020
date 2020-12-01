@@ -23,7 +23,6 @@ go mod verify
 go mod tidy
 go test ./...
 
-go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
 aocdl -session-cookie "$3" -output data/input
 
 git add .

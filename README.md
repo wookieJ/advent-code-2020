@@ -8,7 +8,12 @@ There is a script, which creates new golang module for current day. It demands t
 2. Short description
 3. Your AoC session cookie
 
-Session cookie needs to be set for input downloading
+Session cookie needs to be set for input downloading. You need to have aocdl go package:
+```.env
+go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
+```
+
+Example script running:
 
 ``` bash
 cd tools
