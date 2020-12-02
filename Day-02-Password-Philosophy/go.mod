@@ -1,4 +1,4 @@
-module _DAY_NAME_
+module Day-02-Password-Philosophy
 
 go 1.15
 
