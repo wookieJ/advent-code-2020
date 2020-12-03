@@ -4,11 +4,10 @@ https://adventofcode.com/2020
 
 ## Create new day template
 There is a script, which creates new golang module for current day. It demands three input arguments:
-1. Module name
-2. Short description
-3. Your AoC session cookie
+1. Your AoC session cookie
+2. Number of new day
 
-Session cookie needs to be set for input downloading. You need to have aocdl go package:
+Session cookie needs to be set for input and name of day downloading. You need to have aocdl go package:
 ```.env
 go get -u github.com/GreenLightning/advent-of-code-downloader/aocdl
 ```
@@ -17,7 +16,7 @@ Example script running:
 
 ``` bash
 cd tools
-bash newDay.sh "Day-XX-name" "Day XX: description" "<your_AoC_session_cookie>"
+bash newDay.sh "<your_AoC_session_cookie>" 1
 ``` 
 
 Remember to sync new go module (`go.mod [PPM]` -> `Sync Go Module`)
