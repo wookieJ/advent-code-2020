@@ -21,8 +21,19 @@ func (r Regex) Matches(word string) bool {
 	return len(matches) > 0
 }
 
-func (r Regex) AllMatches(word string) []string {
-	return r.regexp.FindAllStringSubmatch(word, -1)[0]
+func (r Regex) AllMatches(word string) [][]string {
+	return r.regexp.FindAllStringSubmatch(word, -1)
+}
+
+func (r Regex) AllFlattenMatches(word string) []string {
+	result := make([]string, 0)
+	allMatches := r.AllMatches(word)
+	for _, match := range allMatches {
+		for _, subMatch := range match {
+			result = append(result, subMatch)
+		}
+	}
+	return result
 }
 
 func (r Regex) NumberOfOccurrence(word string) int {
