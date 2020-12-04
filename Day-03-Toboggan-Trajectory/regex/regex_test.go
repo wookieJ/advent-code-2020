@@ -1,4 +1,4 @@
-package common
+package regex
 
 import (
 	"github.com/stretchr/testify/assert"

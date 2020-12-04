@@ -1,4 +1,4 @@
-package common
+package regex
 
 import (
 	"index/suffixarray"
