@@ -58,7 +58,7 @@ func GetArrayOfMapsFromString(input, arrayDelimiter string, mapDelimiters []stri
 	return result
 }
 
-func SplitAny(s string, delimiters []string) []string { // TODO: tests
+func SplitAny(s string, delimiters []string) []string {
 	seps := strings.Join(delimiters, "")
 	splitter := func(r rune) bool {
 		return strings.ContainsRune(seps, r)
@@ -66,7 +66,7 @@ func SplitAny(s string, delimiters []string) []string { // TODO: tests
 	return strings.FieldsFunc(s, splitter)
 }
 
-func HaveSameElements(array1, array2 []string) bool { // TODO: tests
+func HaveSameElements(array1, array2 []string) bool {
 	if len(array1) != len(array2) {
 		return false
 	}
@@ -78,7 +78,7 @@ func HaveSameElements(array1, array2 []string) bool { // TODO: tests
 	return true
 }
 
-func ArrayContains(array []string, element string) bool { // TODO: tests
+func ArrayContains(array []string, element string) bool {
 	for _, v := range array {
 		if v == element {
 			return true
@@ -87,7 +87,7 @@ func ArrayContains(array []string, element string) bool { // TODO: tests
 	return false
 }
 
-func IntArrayContains(array []int, element int) bool { // TODO: tests
+func IntArrayContains(array []int, element int) bool {
 	for _, v := range array {
 		if v == element {
 			return true
@@ -96,7 +96,7 @@ func IntArrayContains(array []int, element int) bool { // TODO: tests
 	return false
 }
 
-func MapKeys(m map[string]string) []string { // TODO: tests
+func MapKeys(m map[string]string) []string {
 	var keys []string
 	for key, _ := range m {
 		keys = append(keys, key)
@@ -104,7 +104,7 @@ func MapKeys(m map[string]string) []string { // TODO: tests
 	return keys
 }
 
-func HaveAllKeys(m map[string]string, keys []string) bool { // TODO: tests
+func HaveAllKeys(m map[string]string, keys []string) bool {
 	if len(m) != len(keys) {
 		return false
 	}
@@ -116,7 +116,7 @@ func HaveAllKeys(m map[string]string, keys []string) bool { // TODO: tests
 	return true
 }
 
-func CompareInt(a interface{}, b interface{}) int { // TODO: tests
+func CompareInt(a interface{}, b interface{}) int {
 	if a.(int) > b.(int) {
 		return 1
 	} else if a.(int) < b.(int) {
@@ -126,6 +126,6 @@ func CompareInt(a interface{}, b interface{}) int { // TODO: tests
 	}
 }
 
-func CompareStrings(a interface{}, b interface{}) int { // TODO: tests
+func CompareStrings(a interface{}, b interface{}) int {
 	return strings.Compare(a.(string), b.(string))
 }
