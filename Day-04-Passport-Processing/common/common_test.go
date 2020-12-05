@@ -66,3 +66,14 @@ func TestShouldGetStringValuesFromStringInput(t *testing.T) {
 	assert.Equal(t, []string{"145", "20", "test", "elo"}, stringValuesLines)
 	assert.Equal(t, []string{"145", "20", "test", "elo"}, stringValuesCommas)
 }
+
+func TestShouldGetMapFromStringInput(t *testing.T) {
+	// given
+	inputLines := "key1:val1\nkey2:val2\n\nk1:v1\n\nkey:value a:b c:d"
+
+	// when
+	inputMap := GetArrayOfMapsFromString(inputLines, "\n\n", []string{" ", "\n"}, ":")
+
+	// then
+	assert.Equal(t, []map[string]string{{"key1": "val1", "key2": "val2"}, {"k1": "v1"}, {"key": "value", "a": "b", "c": "d"}}, inputMap)
+}
