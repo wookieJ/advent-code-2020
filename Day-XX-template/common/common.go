@@ -144,10 +144,10 @@ func GetArrayOfArrays(input, firstDelimiter, secondDelimiter string) [][]string 
 	return result
 }
 
-func GetAllLetters(array []string) []string {
+func SplitAndGetAll(array []string, delimiter string) []string {
 	set := make(map[string]string)
 	for _, value := range array {
-		for _, letter := range strings.Split(value, "") {
+		for _, letter := range strings.Split(value, delimiter) {
 			set[letter] = ""
 		}
 	}
@@ -172,10 +172,20 @@ func GetArraysIntersection(a1, a2 []string) []string {
 	return result
 }
 
-func GetCommonLetters(array []string) []string {
+func GetIntArraysIntersection(a1, a2 []int) []int {
+	var result = make([]int, 0)
+	for _, v := range a1 {
+		if IntArrayContains(a2, v) {
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
+func SplitAndGetCommon(array []string, delimiter string) []string {
 	var result []string
 	for i, value := range array {
-		letters := strings.Split(value, "")
+		letters := strings.Split(value, delimiter)
 		if i == 0 {
 			result = letters
 		} else {

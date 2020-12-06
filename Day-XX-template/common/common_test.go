@@ -198,13 +198,15 @@ func TestShouldGetAllLetters(t *testing.T) {
 	a3 := []string{"ab", "ac"}
 	a4 := []string{"a", "a", "a", "a"}
 	a5 := []string{"b"}
+	a6 := []string{"a;b", "a;b;c;de"}
 
 	// then
-	assert.ElementsMatch(t, []string{"a", "b", "c"}, GetAllLetters(a1))
-	assert.ElementsMatch(t, []string{"a", "b", "c"}, GetAllLetters(a2))
-	assert.ElementsMatch(t, []string{"a", "b", "c"}, GetAllLetters(a3))
-	assert.ElementsMatch(t, []string{"a"}, GetAllLetters(a4))
-	assert.ElementsMatch(t, []string{"b"}, GetAllLetters(a5))
+	assert.ElementsMatch(t, []string{"a", "b", "c"}, SplitAndGetAll(a1, ""))
+	assert.ElementsMatch(t, []string{"a", "b", "c"}, SplitAndGetAll(a2, ""))
+	assert.ElementsMatch(t, []string{"a", "b", "c"}, SplitAndGetAll(a3, ""))
+	assert.ElementsMatch(t, []string{"a"}, SplitAndGetAll(a4, ""))
+	assert.ElementsMatch(t, []string{"b"}, SplitAndGetAll(a5, ""))
+	assert.ElementsMatch(t, []string{"a", "b", "c", "de"}, SplitAndGetAll(a6, ";"))
 
 }
 
@@ -215,13 +217,15 @@ func TestShouldGetCommonLetters(t *testing.T) {
 	a3 := []string{"ab", "ac"}
 	a4 := []string{"a", "a", "a", "a"}
 	a5 := []string{"b"}
+	a6 := []string{"a;b;cd", "a;cd;g"}
 
 	// then
-	assert.ElementsMatch(t, []string{"a", "b", "c"}, GetCommonLetters(a1))
-	assert.ElementsMatch(t, []string{}, GetCommonLetters(a2))
-	assert.ElementsMatch(t, []string{"a"}, GetCommonLetters(a3))
-	assert.ElementsMatch(t, []string{"a"}, GetCommonLetters(a4))
-	assert.ElementsMatch(t, []string{"b"}, GetCommonLetters(a5))
+	assert.ElementsMatch(t, []string{"a", "b", "c"}, SplitAndGetCommon(a1, ""))
+	assert.ElementsMatch(t, []string{}, SplitAndGetCommon(a2, ""))
+	assert.ElementsMatch(t, []string{"a"}, SplitAndGetCommon(a3, ""))
+	assert.ElementsMatch(t, []string{"a"}, SplitAndGetCommon(a4, ""))
+	assert.ElementsMatch(t, []string{"b"}, SplitAndGetCommon(a5, ""))
+	assert.ElementsMatch(t, []string{"a", "cd"}, SplitAndGetCommon(a6, ";"))
 }
 
 func TestShouldGetArraysIntersection(t *testing.T) {
@@ -230,6 +234,14 @@ func TestShouldGetArraysIntersection(t *testing.T) {
 	assert.ElementsMatch(t, []string{}, GetArraysIntersection([]string{"a"}, []string{}))
 	assert.ElementsMatch(t, []string{}, GetArraysIntersection([]string{}, []string{}))
 	assert.ElementsMatch(t, []string{}, GetArraysIntersection([]string{"a"}, []string{"b"}))
+}
+
+func TestShouldGetIntArraysIntersection(t *testing.T) {
+	assert.ElementsMatch(t, []int{1, 2}, GetIntArraysIntersection([]int{1, 2, 3}, []int{1, 2, 4}))
+	assert.ElementsMatch(t, []int{1}, GetIntArraysIntersection([]int{1}, []int{1}))
+	assert.ElementsMatch(t, []int{}, GetIntArraysIntersection([]int{1}, []int{}))
+	assert.ElementsMatch(t, []int{}, GetIntArraysIntersection([]int{}, []int{}))
+	assert.ElementsMatch(t, []int{}, GetIntArraysIntersection([]int{1}, []int{2}))
 }
 
 func TestShouldConvertToInterfaceArray(t *testing.T) {
