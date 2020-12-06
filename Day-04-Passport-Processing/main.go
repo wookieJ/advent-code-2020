@@ -38,12 +38,9 @@ func firstPart(input string) int {
 func secondPart(input string) int {
 	passports := common.GetArrayOfMapsFromString(input, "\n\n", []string{" ", "\n"}, ":")
 	result := 0
-	for i, passport := range passports {
+	for _, passport := range passports {
 		delete(passport, "cid")
 		passportValidFields := 0
-		if i==252 {
-			println(passport)
-		}
 		if common.HaveAllKeys(passport, requiredFields) {
 			for key, value := range passport {
 				switch key {
@@ -70,7 +67,7 @@ func secondPart(input string) int {
 						}
 					}
 				case "hcl":
-					if regex.NewRegex("#[0-9a-f]{6}").Matches(value) {
+					if regex.NewRegex("^#[0-9a-f]{6}$").Matches(value) {
 						passportValidFields++
 					}
 				case "ecl":
@@ -78,7 +75,7 @@ func secondPart(input string) int {
 						passportValidFields++
 					}
 				case "pid":
-					if regex.NewRegex("\\d{9}").Matches(value) {
+					if regex.NewRegex("^\\d{9}$").Matches(value) {
 						passportValidFields++
 					}
 				}
