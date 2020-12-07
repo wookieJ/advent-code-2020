@@ -45,7 +45,7 @@ go mod verify
 go mod tidy
 go test ./...
 
-aocdl -session-cookie "$3" -output data/input
+aocdl -session-cookie "$1" -output data/input
 
 git add .
 
