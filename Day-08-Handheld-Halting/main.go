@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const dataPath = "data/input"
@@ -29,17 +28,7 @@ func main() {
 func firstPart(input string) int {
 	var accumulator int
 	lines := common.GetStringArrayFromStringInput(input, "\n")
-	instructions := make(map[int]Operation)
-	for i, line := range lines {
-		l := strings.Split(line, " ")
-		if strings.Contains(l[1], "+") {
-			opValue, _ := strconv.Atoi(l[1][1:])
-			instructions[i] = Operation{l[0], opValue}
-		} else {
-			opValue, _ := strconv.Atoi(l[1][1:])
-			instructions[i] = Operation{l[0], (-1) * opValue}
-		}
-	}
+	instructions := getInstructionsMap(lines)
 	i := 0
 	var used []int
 	for true {
@@ -58,8 +47,7 @@ func firstPart(input string) int {
 	return accumulator
 }
 
-func secondPart(input string) int {
-	lines := common.GetStringArrayFromStringInput(input, "\n")
+func getInstructionsMap(lines []string) map[int]Operation {
 	instructions := make(map[int]Operation)
 	for i, line := range lines {
 		l := strings.Split(line, " ")
@@ -71,10 +59,16 @@ func secondPart(input string) int {
 			instructions[i] = Operation{l[0], (-1) * opValue}
 		}
 	}
+	return instructions
+}
+
+func secondPart(input string) int {
+	lines := common.GetStringArrayFromStringInput(input, "\n")
+	instructions := getInstructionsMap(lines)
 	result := 0
 	var used []int
 	for true {
-		r, err := checkAccu(instructions)
+		r, err := runProgramWithTerminationAtTheEnd(instructions)
 		if !err {
 			result = r
 			break
@@ -103,16 +97,11 @@ func secondPart(input string) int {
 	return result
 }
 
-func checkAccu(instructions map[int]Operation) (int, bool) {
-	start := time.Now()
+func runProgramWithTerminationAtTheEnd(instructions map[int]Operation) (int, bool) {
 	var accumulator int
 	i := 0
 	var used []int
 	for true {
-		elapsed := time.Since(start)
-		if elapsed.Milliseconds() > 50 {
-			return 0, true
-		}
 		if common.IntArrayContains(used, i) {
 			return 0, true
 		}
