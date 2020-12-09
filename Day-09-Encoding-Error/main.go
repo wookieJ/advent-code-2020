@@ -18,14 +18,12 @@ func main() {
 	fmt.Println(fmt.Sprintf("  Part 2 >> %d", resultPart2))
 }
 
-func firstPart(input string, preambuleLength int) int {
+func firstPart(input string, preambleLength int) int {
 	numbers := common.GetIntArrayFromStringInput(input, "\n")
-	var used []int
-	var preambule = numbers[:preambuleLength]
-	for i, number := range numbers[preambuleLength:] {
-		if v1, v2, ok := checkIfItIsSum(preambule[i:i+preambuleLength], used, number); ok {
-			preambule = append(preambule, number)
-			used = append(used, v1, v2)
+	var sumElements = numbers[:preambleLength]
+	for i, number := range numbers[preambleLength:] {
+		if checkIfSumOfTwoExists(sumElements[i:i+preambleLength], number) {
+			sumElements = append(sumElements, number)
 		} else {
 			return number
 		}
@@ -33,55 +31,36 @@ func firstPart(input string, preambuleLength int) int {
 	return 0
 }
 
-func checkIfItIsSum(preambule, used []int, number int) (int, int, bool) {
-	for i, v1 := range preambule {
-		for j, v2 := range preambule {
-			if i != j {
-				if v1+v2 == number {
-					return v1, v2, true
-				}
+func checkIfSumOfTwoExists(array []int, sum int) bool {
+	for i, v1 := range array {
+		for j, v2 := range array {
+			if i != j && v1+v2 == sum {
+				return true
 			}
 		}
 	}
-
-	return 0, 0, false
+	return false
 }
 
 func secondPart(input string, l int) int {
-	find := firstPart(input, l)
+	findSum := firstPart(input, l)
 	numbers := common.GetIntArrayFromStringInput(input, "\n")
-	var maxL int
-	for i, _ := range numbers {
-		var result []int
-		f := 0
-		for _, v2 := range numbers[i+1:] {
-			f += v2
-			if f < find {
-				result = append(result, v2)
-			} else if f == find {
-				min, max := MinMax(result)
-				if maxL < min + max {
-					maxL = min + max
+	var summingSetMinMaxSum int
+	for i := range numbers {
+		var summingSet []int
+		movingSum := 0
+		for _, v := range numbers[i+1:] {
+			movingSum += v
+			if movingSum < findSum {
+				summingSet = append(summingSet, v)
+			} else if movingSum == findSum {
+				if min, max, err := common.MinMax(summingSet); err == nil {
+					if summingSetMinMaxSum < min+max {
+						summingSetMinMaxSum = min + max
+					}
 				}
 			}
 		}
 	}
-	return maxL
-}
-
-func MinMax(array []int) (int, int) {
-	if len(array) == 0 {
-		return 0,0
-	}
-	var max int = array[0]
-	var min int = array[0]
-	for _, value := range array {
-		if max < value {
-			max = value
-		}
-		if min > value {
-			min = value
-		}
-	}
-	return min, max
+	return summingSetMinMaxSum
 }

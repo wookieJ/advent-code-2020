@@ -194,3 +194,20 @@ func SplitAndGetCommon(array []string, delimiter string) []string {
 	}
 	return result
 }
+
+func MinMax(array []int) (int, int, error) {
+	if array == nil || len(array) == 0 {
+		return 0, 0, fmt.Errorf("Empty or nil array")
+	}
+	var max = array[0]
+	var min = array[0]
+	for _, value := range array {
+		if max < value {
+			max = value
+		}
+		if min > value {
+			min = value
+		}
+	}
+	return min, max, nil
+}

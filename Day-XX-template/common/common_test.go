@@ -251,3 +251,19 @@ func TestShouldConvertToInterfaceArray(t *testing.T) {
 	//then
 	assert.Equal(t, []interface{}{"a", "b"}, ToInterfaceArray(stringArray))
 }
+
+func TestShouldGetMinAndMaxFromIntArray(t *testing.T) {
+	// when
+	min1, max1, _ := MinMax([]int{0, 1, 2, 3})
+	min2, max2, _ := MinMax([]int{4, 1, -1, 3})
+	_, _, err1 := MinMax(nil)
+	_, _, err2 := MinMax([]int{})
+
+	// then
+	assert.Equal(t, 0, min1)
+	assert.Equal(t, 3, max1)
+	assert.Equal(t, -1, min2)
+	assert.Equal(t, 4, max2)
+	assert.Error(t, err1)
+	assert.Error(t, err2)
+}
