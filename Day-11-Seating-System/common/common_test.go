@@ -267,10 +267,3 @@ func TestShouldGetMinAndMaxFromIntArray(t *testing.T) {
 	assert.Error(t, err1)
 	assert.Error(t, err2)
 }
-
-func TestShouldReturnAbsOfInt(t *testing.T) {
-	assert.Equal(t, 0, Abs(0))
-	assert.Equal(t, 1, Abs(1))
-	assert.Equal(t, 1, Abs(-1))
-	assert.Equal(t, 91, Abs(-91))
-}

@@ -78,6 +78,20 @@ func HaveSameElements(array1, array2 []string) bool {
 	return true
 }
 
+func HaveAnyElement(array1, array2 []int) (bool, int) {
+	min := 9999999
+	var found bool
+	for _, v := range array1 {
+		if IntArrayContains(array2, v) {
+			found = true
+			if v < min {
+				min = v
+			}
+		}
+	}
+	return found, min
+}
+
 func ArrayContains(array []string, element string) bool {
 	for _, v := range array {
 		if v == element {
@@ -210,31 +224,4 @@ func MinMax(array []int) (int, int, error) {
 		}
 	}
 	return min, max, nil
-}
-
-func CopyMap(originalMap map[string]string) map[string]string {
-	copyMap := make(map[string]string, len(originalMap))
-	for key, value := range originalMap {
-		copyMap[key] = value
-	}
-	return copyMap
-}
-
-func CopyMapOfMap(originalMap map[string]map[string]string) map[string]map[string]string {
-	copyMap := make(map[string]map[string]string, len(originalMap))
-	for k1, v1 := range originalMap {
-		subMap := make(map[string]string, len(v1))
-		for k2, v2 := range v1 {
-			subMap[k2] = v2
-		}
-		copyMap[k1] = subMap
-	}
-	return copyMap
-}
-
-func Abs(value int) int {
-	if value < 0 {
-		return -1 * value
-	}
-	return value
 }
