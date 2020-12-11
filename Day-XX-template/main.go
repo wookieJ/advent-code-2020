@@ -19,8 +19,8 @@ func main() {
 }
 
 func firstPart(input string) int {
-	//lines := common.GetStringArrayFromStringInput(input, "/n")
-	//lines := common.GetIntArrayFromStringInput(input, "/n")
+	//lines := common.GetStringArrayFromStringInput(input, "\n")
+	//lines := common.GetIntArrayFromStringInput(input, "\n")
 	return 0
 }
 
