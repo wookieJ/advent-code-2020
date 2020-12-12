@@ -1,4 +1,5 @@
-# _DAY_NAME_: 
+# _DAY_NAME_
+https://adventofcode.com/2020/day/_DAY_NUMBER_
 
 ## Run
 

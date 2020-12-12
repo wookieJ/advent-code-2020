@@ -195,6 +195,38 @@ func SplitAndGetCommon(array []string, delimiter string) []string {
 	return result
 }
 
+func CopyMap(originalMap map[string]string) map[string]string {
+	copyMap := make(map[string]string, len(originalMap))
+	for key, value := range originalMap {
+		copyMap[key] = value
+	}
+	return copyMap
+}
+
+func CopyMapOfMap(originalMap map[string]map[string]string) map[string]map[string]string {
+	copyMap := make(map[string]map[string]string, len(originalMap))
+	for k1, v1 := range originalMap {
+		subMap := make(map[string]string, len(v1))
+		for k2, v2 := range v1 {
+			subMap[k2] = v2
+		}
+		copyMap[k1] = subMap
+	}
+	return copyMap
+}
+
+func CopyMapOfIntMap(originalMap map[int]map[int]string) map[int]map[int]string {
+	copyMap := make(map[int]map[int]string, len(originalMap))
+	for k1, v1 := range originalMap {
+		subMap := make(map[int]string, len(v1))
+		for k2, v2 := range v1 {
+			subMap[k2] = v2
+		}
+		copyMap[k1] = subMap
+	}
+	return copyMap
+}
+
 func MinMax(array []int) (int, int, error) {
 	if array == nil || len(array) == 0 {
 		return 0, 0, fmt.Errorf("Empty or nil array")

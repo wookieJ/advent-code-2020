@@ -2,10 +2,13 @@ package main
 
 import (
 	"Day-11-Seating-System/common"
+	"Day-11-Seating-System/point"
 	"fmt"
 )
 
 const dataPath = "data/input"
+
+type SeatsMap map[int]map[int]string
 
 func main() {
 	fmt.Println("\n--- Day 11: Seating System  ---")
@@ -20,39 +23,33 @@ func main() {
 
 func firstPart(input string) int {
 	lines := common.GetStringArrayFromStringInput(input, "\n")
-	seatsMap := make(map[int]map[int]string, 50)
-	for row, line := range lines {
-		rowMap := make(map[int]string, 50)
-		seats := common.GetStringArrayFromStringInput(line, "")
-		for col, seat := range seats {
-			rowMap[col] = seat
-		}
-		seatsMap[row] = rowMap
-	}
+	seatsMap := getSeatsMapFromInput(lines)
+	return cellAutomataRun(seatsMap, areAllNeighboursFree, areFourNeighboursTaken)
+}
+
+func cellAutomataRun(seatsMap SeatsMap, aliveCellAlgorithm func(seats SeatsMap, row int, col int) bool,
+	killCellAlgorithm func(seats SeatsMap, row int, col int) bool) int {
 	end := true
-	result := 0
 	for end {
 		end = false
-		copyMap := make(map[int]map[int]string, 50)
-		for row, line := range seatsMap {
-			rowMap := make(map[int]string, 50)
-			for col, seat := range line {
-				rowMap[col] = seat
-			}
-			copyMap[row] = rowMap
-		}
+		copyMap := common.CopyMapOfIntMap(seatsMap)
 		for row, rowSeats := range copyMap {
 			for col, _ := range rowSeats {
-				if shouldAliveCell(copyMap, row, col) {
+				if aliveCellAlgorithm(copyMap, row, col) {
 					seatsMap[row][col] = "#"
 					end = true
-				} else if shouldKillCell(copyMap, row, col) {
+				} else if killCellAlgorithm(copyMap, row, col) {
 					seatsMap[row][col] = "L"
 					end = true
 				}
 			}
 		}
 	}
+	return countTakenSeats(seatsMap)
+}
+
+func countTakenSeats(seatsMap SeatsMap) int {
+	result := 0
 	for _, line := range seatsMap {
 		for _, seat := range line {
 			if seat == "#" {
@@ -63,7 +60,20 @@ func firstPart(input string) int {
 	return result
 }
 
-func shouldKillCell(seats map[int]map[int]string, row int, col int) bool {
+func getSeatsMapFromInput(lines []string) SeatsMap {
+	seatsMap := make(SeatsMap, 50)
+	for row, line := range lines {
+		rowMap := make(map[int]string, 50)
+		seats := common.GetStringArrayFromStringInput(line, "")
+		for col, seat := range seats {
+			rowMap[col] = seat
+		}
+		seatsMap[row] = rowMap
+	}
+	return seatsMap
+}
+
+func areFourNeighboursTaken(seats SeatsMap, row int, col int) bool {
 	if seats[row][col] == "#" {
 		cnt := 0
 		for r := row - 1; r < row+2; r++ {
@@ -83,7 +93,7 @@ func shouldKillCell(seats map[int]map[int]string, row int, col int) bool {
 	return false
 }
 
-func shouldAliveCell(seats map[int]map[int]string, row int, col int) bool {
+func areAllNeighboursFree(seats SeatsMap, row int, col int) bool {
 	s := seats[row][col]
 	if s == "L" {
 		cnt := 0
@@ -104,6 +114,65 @@ func shouldAliveCell(seats map[int]map[int]string, row int, col int) bool {
 	return false
 }
 
+func areAllEightDirectionVisibleSeatsFree(seats SeatsMap, row int, col int) bool {
+	s := seats[row][col]
+	if s == "L" {
+		foundedInDirection := make(map[point.Point]bool)
+		for i := 0; i < len(seats) || i < len(seats[0]); i++ {
+			for r := row - i - 1; r < row+i+2; r += i + 1 {
+				for c := col - i - 1; c < col+i+2; c += i + 1 {
+					if (r != row || c != col) && r >= 0 && c >= 0 {
+						seat := seats[r][c]
+						if seat == "#" && foundedInDirection[computeDirection(row-r, col-c)] == false {
+							return false
+						} else if seat == "L" {
+							direction := computeDirection(row-r, col-c)
+							foundedInDirection[direction] = true
+						}
+					}
+				}
+			}
+		}
+		return true
+	}
+	return false
+}
+
+func fiveOccupiedSeatsVisible(seats SeatsMap, row int, col int) bool {
+	s := seats[row][col]
+	if s == "#" {
+		foundedInDirection := make(map[point.Point]bool)
+		cnt := 0
+		for i := 0; i < len(seats) || i < len(seats[0]); i++ {
+			for r := row - i - 1; r < row+i+2; r += i + 1 {
+				for c := col - i - 1; c < col+i+2; c += i + 1 {
+					if r != row || c != col && r >= 0 && c >= 0 {
+						seat := seats[r][c]
+						if seat == "#" && foundedInDirection[computeDirection(row-r, col-c)] == false {
+							cnt++
+							foundedInDirection[computeDirection(row-r, col-c)] = true
+						} else if seat == "L" {
+							direction := computeDirection(row-r, col-c)
+							foundedInDirection[direction] = true
+						}
+						if cnt == 5 {
+							return true
+						}
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
+func computeDirection(x, y int) point.Point {
+	p := point.Point{X: x, Y: y}
+	return p.DirectionVector(0.001)
+}
+
 func secondPart(input string) int {
-	return 0
+	lines := common.GetStringArrayFromStringInput(input, "\n")
+	seatsMap := getSeatsMapFromInput(lines)
+	return cellAutomataRun(seatsMap, areAllEightDirectionVisibleSeatsFree, fiveOccupiedSeatsVisible)
 }

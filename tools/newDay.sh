@@ -37,6 +37,7 @@ fi
 
 find ../"$DAY_MODULE" \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' -e "s/_DAY_NAME_/$DAY_MODULE/"
 find ../"$DAY_MODULE" \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' -e "s/_DAY_DESC_/$DAY_DESC/"
+find ../"$DAY_MODULE" \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i '' -e "s/_DAY_NUMBER_/$2/"
 
 cd ../"$DAY_MODULE" || exit 1
 go mod init "$DAY_MODULE"

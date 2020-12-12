@@ -232,6 +232,18 @@ func CopyMapOfMap(originalMap map[string]map[string]string) map[string]map[strin
 	return copyMap
 }
 
+func CopyMapOfIntMap(originalMap map[int]map[int]string) map[int]map[int]string {
+	copyMap := make(map[int]map[int]string, len(originalMap))
+	for k1, v1 := range originalMap {
+		subMap := make(map[int]string, len(v1))
+		for k2, v2 := range v1 {
+			subMap[k2] = v2
+		}
+		copyMap[k1] = subMap
+	}
+	return copyMap
+}
+
 func Abs(value int) int {
 	if value < 0 {
 		return -1 * value
