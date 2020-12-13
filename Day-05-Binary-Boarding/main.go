@@ -4,6 +4,7 @@ import (
 	"Day-05-Binary-Boarding/common"
 	"fmt"
 	"github.com/jucardi/go-streams/streams"
+	"time"
 )
 
 const dataPath = "data/input"
@@ -12,11 +13,15 @@ func main() {
 	fmt.Println("\n--- Day 5: Binary Boarding  ---")
 	input := common.GetInputFromFile(dataPath)
 
+	start := time.Now()
 	resultPart1 := firstPart(input)
-	resultPart2 := secondPart(input)
+	firstPartDuration := time.Since(start)
+	fmt.Println(fmt.Sprintf("  Part 1 >> %d [after: %v]", resultPart1, firstPartDuration))
 
-	fmt.Println(fmt.Sprintf("  Part 1 >> %d", resultPart1))
-	fmt.Println(fmt.Sprintf("  Part 2 >> %d", resultPart2))
+	start = time.Now()
+	resultPart2 := secondPart(input)
+	secondPartDuration := time.Since(start)
+	fmt.Println(fmt.Sprintf("  Part 2 >> %d [after: %v]", resultPart2, secondPartDuration))
 }
 
 func seatToId(v interface{}) interface{} {

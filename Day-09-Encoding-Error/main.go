@@ -3,6 +3,7 @@ package main
 import (
 	"Day-09-Encoding-Error/common"
 	"fmt"
+	"time"
 )
 
 const dataPath = "data/input"
@@ -11,11 +12,15 @@ func main() {
 	fmt.Println("\n--- Day 9: Encoding Error  ---")
 	input := common.GetInputFromFile(dataPath)
 
+	start := time.Now()
 	resultPart1 := firstPart(input, 25)
-	resultPart2 := secondPart(input, 25)
+	firstPartDuration := time.Since(start)
+	fmt.Println(fmt.Sprintf("  Part 1 >> %d [after: %v]", resultPart1, firstPartDuration))
 
-	fmt.Println(fmt.Sprintf("  Part 1 >> %d", resultPart1))
-	fmt.Println(fmt.Sprintf("  Part 2 >> %d", resultPart2))
+	start = time.Now()
+	resultPart2 := secondPart(input, 25)
+	secondPartDuration := time.Since(start)
+	fmt.Println(fmt.Sprintf("  Part 2 >> %d [after: %v]", resultPart2, secondPartDuration))
 }
 
 func firstPart(input string, preambleLength int) int {
