@@ -1,5 +1,7 @@
 # Advent of Code 2020
-
+<p align="right">
+ <img width="200" src="../master/logo.jpg">
+</p>
 https://adventofcode.com/2020
 
 ## Create new day template
