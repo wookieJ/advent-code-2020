@@ -40,7 +40,7 @@ func firstPart(input string) int {
 	memory := make(map[int]int)
 	for _, program := range programs {
 		for _, command := range program.commands {
-			intV := maskValue(command.value, program.mask)
+			intV, _ := maskValue(command.value, program.mask, false)
 			memory[command.address] = intV
 		}
 	}
@@ -79,19 +79,23 @@ func sumValues(m map[int]int) int {
 	return result
 }
 
-func maskValue(value int, mask string) int {
+func maskValue(value int, mask string, floatingX bool) (int, []int) {
 	binary := strconv.FormatInt(int64(value), 2)
 	bin := strings.Repeat("0", 36-len(binary))
 	binary = bin + binary
+	var floatingIndices []int
 	for i, bit := range mask {
 		if bit == 'X' {
+			if floatingX {
+				floatingIndices = append(floatingIndices, 35-i)
+			}
 			continue
-		} else {
+		} else if !floatingX || bit == '1' {
 			binary = replaceAtIndex(binary, bit, i)
 		}
 	}
 	intV64, _ := strconv.ParseInt(binary, 2, 64)
-	return int(intV64)
+	return int(intV64), floatingIndices
 }
 
 func replaceAtIndex(in string, r rune, i int) string {
@@ -101,5 +105,23 @@ func replaceAtIndex(in string, r rune, i int) string {
 }
 
 func secondPart(input string) int {
-	return 0
+	programs := getProgramList(input)
+	memory := make(map[int]int)
+	for _, program := range programs {
+		for _, command := range program.commands {
+			intV, floatingIndices := maskValue(command.address, program.mask, true)
+			perms := []int{intV}
+			for _, index := range floatingIndices {
+				for _, perm := range perms {
+					with1 := perm | 1<<index
+					with0 := with1 ^ 1<<index
+					perms = append(perms, with1, with0)
+				}
+			}
+			for _, index := range perms {
+				memory[index] = command.value
+			}
+		}
+	}
+	return sumValues(memory)
 }
