@@ -26,6 +26,9 @@ func main() {
 func firstPart(input string) int {
 	//lines := common.GetStringArrayFromStringInput(input, "\n")
 	//lines := common.GetIntArrayFromStringInput(input, "\n")
+	//for _, line := range lines {
+	//
+	//}
 	return 0
 }
 

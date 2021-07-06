@@ -49,14 +49,12 @@ func secondPart(input string) int {
 	_, tmp := common.StringToInt(lines[0]), lines[1]
 	bussIds := make([]int, 0)
 	indexes := make([]int, 0)
-	n := 0
 	t := common.GetStringArrayFromStringInput(tmp, ",")
-	for _, v := range t {
+	for i, v := range t {
 		if v != "x" {
 			bussIds = append(bussIds, common.StringToInt(v))
-			indexes = append(indexes, n)
+			indexes = append(indexes, i)
 		}
-		n++
 	}
 	value := 0
 	diff := bussIds[0]
